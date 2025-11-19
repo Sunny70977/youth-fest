@@ -5,78 +5,208 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MRSPTU - Youth Festival 2023</title>
+    <title>MRSPTU - Youth Festival 2025</title>
 
     <link rel="stylesheet" href="css/core.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/bootstrap.css">
 
+    <style>
+        /* Fullscreen background image on home page */
+        .home-page {
+            position: relative;
+            height: 100vh;     /* Full screen height */
+            width: 100%;
+            overflow: hidden;
+            text-align: center;
+            padding-top: 150px;
+        }
+
+        .home-bg-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;   /* Makes image fit full screen */
+            z-index: -1;         /* Behind text */
+            filter: brightness(100%); /* Makes text more visible */
+        }
+
+        .home-page h1 {
+            font-size: 42px;
+            color: white;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .home-page p {
+            font-size: 20px;
+            color: #eaeaea;
+            margin-bottom: 30px;
+        }
+
+       .btn-start {
+    padding: 12px 28px;
+    font-size: 20px;
+    background-color: #ff4800;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 350px;   /* Shift button downward */
+}
+
+
+        .btn-start:hover {
+            background-color: #e04000;
+        }
+
+        .events-section {
+            display: none;
+        }
+
+        .home-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            background-color: #ff4800;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .home-btn:hover {
+            background-color: #e04000;
+        }
+
+        .back-to-events-btn {
+            position: absolute;
+            right: 140px;
+            top: 20px;
+            background-color: #ff4800;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .back-to-events-btn:hover {
+            background-color: #e04000;
+        }
+    </style>
 </head>
 
 <body class="noselect">
-    <header>
+
+    <header style="position: relative;">
         <div class="mrsptu-title">
             Maharaja Ranjit Singh Punjab Technical University
         </div>
+
         <div class="divider"></div>
-        <div class="yft-title">
-            8th Inter Zonal Youth Festival (2023)
+
+        <div class="yft-title" style="font-weight: bold; color: #ff4800; font-size: 28px;">
+            10<sup>th</sup> Inter-Zonal Youth Festival <span style="color: #333;">(2025)</span>
         </div>
+
+        <button class="back-to-events-btn" onclick="showEventsPage()">← Back to Events</button>
+        <button class="home-btn" onclick="showHomePage()">Home</button>
     </header>
 
-    <section class="page-heading">
-        EVENTS
+    <!-- HOME PAGE WITH FULL IMAGE -->
+    <section class="home-page" id="homePage">
+        <!-- IMPORTANT: Correct image path -->
+        <img src="images/home-banner.jpeg" class="home-bg-img">
+
+        
+        
+        <button class="btn-start" onclick="showEventsPage()">Go to Events</button>
     </section>
 
-    <div class="content">
-        <div class="events-categories">
-            <ul></ul>
-        </div>
+    <!-- EVENTS PAGE -->
+    <section class="events-section" id="eventsPage">
+        <section class="page-heading">
+            EVENTS
+        </section>
 
-        <div class="events-list">
-            <ul></ul>
-        </div>
-
-        <div class="teams-list" style="display: none;">
-            <div class="event-name"></div>
-            <div class="rules-btn" data-bs-toggle="modal" data-bs-target="#rulesModal" onclick="onRulesButtonClickedHandler();">Rules</div>
-            <div class="time-cont">
-                <div class="time-title">Minimum Time : </div>
-                <div id="minTime" class="time">
-                    --:--
-                </div>
+        <div class="content">
+            <div class="events-categories">
+                <ul></ul>
             </div>
 
-            <div class="time-cont">
-                <div class="time-title">Maximum Time : </div>
-                <div id="maxTime" class="time">
-                    --:--
-                </div>
+            <div class="events-list">
+                <ul></ul>
             </div>
 
-            <ul></ul>
+            <div class="teams-list" style="display: none;">
+                <div class="event-name"></div>
+
+                <div class="rules-btn" data-bs-toggle="modal" data-bs-target="#rulesModal"
+                    onclick="onRulesButtonClickedHandler();">
+                    Rules
+                </div>
+
+                <div class="time-cont">
+                    <div class="time-title">Minimum Time : </div>
+                    <div id="minTime" class="time">--:--</div>
+                </div>
+
+                <div class="time-cont">
+                    <div class="time-title">Maximum Time : </div>
+                    <div id="maxTime" class="time">--:--</div>
+                </div>
+
+                <ul></ul>
+            </div>
         </div>
-    </div>
+    </section>
 
     <!-- RULES MODAL -->
     <div class="modal fade" id="rulesModal" tabindex="-1">
         <div class="modal-dialog modal-fullscreen">
-          <div class="modal-content">
-            <div class="modal-header"  style="color: white; background-color: rgb(255, 72, 0); box-shadow: 0px 1px 6px 1px rgb(179, 179, 179);">
-              <h5 class="modal-title" style="font-size: 32px;" id="rulesModalTitle"></h5>
-              <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header"
+                    style="color: white; background-color: rgb(255, 72, 0); box-shadow: 0px 1px 6px 1px rgb(179, 179, 179);">
+                    <h5 class="modal-title" style="font-size: 32px;" id="rulesModalTitle"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" style="font-weight: bold;">
+                    <ul id="rulesList"></ul>
+                </div>
             </div>
-            <div class="modal-body" style="font-weight: bold;">
-                <ul id="rulesList"></ul>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
 
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/index.js"></script>
-</body>
 
+    <script>
+        function showEventsPage() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('eventsPage').style.display = 'block';
+        }
+
+        function showHomePage() {
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('eventsPage').style.display = 'none';
+        }
+
+        // Open Events directly if ?open=events appears in URL
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get("open") === "events") {
+                showEventsPage();
+            }
+        };
+    </script>
+
+</body>
 </html>

@@ -1,66 +1,74 @@
 const express = require('express');
-const app = express();
-const PORT = 8080;
-
+const path = require('path');
 const bodyParser = require('body-parser');
 
 const Arduino = require('./arduino');
-const saveRecord = require('./recordhandler')
+const saveRecord = require('./recordhandler');
 
-app.use(express.static("static"));
+const app = express();
+const PORT = 8080;
+
+// Middlewares
+app.use(express.static(path.join(__dirname, 'static')));
+app.use('/home', express.static(path.join(__dirname, 'home')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get("/yft-data", (req, res) => {
-    res.send(require("./YFTData.json"))
-})
+// Serve Home Page
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'home', 'home.html')); // change name if different
+// });
 
+// Serve YFT Data
+app.get('/yft-data', (req, res) => {
+  res.send(require('./YFTData.json'));
+});
 
-app.post("/arduino/:action", (req, res)=> {
-    const action = req.params.action;
+// Arduino Control Routes
+app.post('/arduino/:action', (req, res) => {
+  const action = req.params.action;
 
-    if(action == "red"){
-        Arduino.sendRedLightSignal();
-        res.send("red");
-        return;
-    }
+  switch (action) {
+    case 'red':
+      Arduino.sendRedLightSignal();
+      return res.send('red');
 
-    if(action == "green"){
-        Arduino.sendGreenLightSignal();
-        res.send("green");
-        return;
-    }
+    case 'green':
+      Arduino.sendGreenLightSignal();
+      return res.send('green');
 
-    if(action == "yellow"){
-        Arduino.sendYellowLightSignal();
-        res.send("yellow");
-        return;
-    }
+    case 'yellow':
+      Arduino.sendYellowLightSignal();
+      return res.send('yellow');
 
-    if(action == "off"){
-        Arduino.sendTurnOffSignal();
+    case 'off':
+      Arduino.sendTurnOffSignal();
+      saveRecord(
+        req.body.eventCategory,
+        req.body.eventName,
+        req.body.team,
+        req.body.startTime,
+        req.body.performanceTime,
+        req.body.participant
+      );
+      return res.send('off');
 
-        saveRecord(
-            req.body.eventCategory, 
-            req.body.eventName, 
-            req.body.team, 
-            req.body.startTime, 
-            req.body.performanceTime, 
-            req.body.participant)
+    case 'connect':
+      Arduino.performConnection();
+      return res.send('done');
 
-        res.send("off");
-        return;
-    }
+    default:
+      return res.send('error');
+  }
+});
 
-    if(action == "connect"){
-        Arduino.performConnection();
-        res.send("done");
-        return;
-    }
-
-    res.send("error");
-})
+// ✅ Restart Server Route
+app.post('/refresh-server', (req, res) => {
+  console.log('♻️ Server restarting...');
+  res.send('Restarting server...');
+  setTimeout(() => process.exit(0), 1000); // nodemon will auto-restart the server
+});
 
 app.listen(PORT, () => {
-    console.log(`Server started at port ${PORT}`);
-})
+  console.log(`✅ Server started at http://localhost:${PORT}`);
+});

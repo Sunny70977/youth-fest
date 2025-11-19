@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MRSPTU - Youth Festival 2023</title>
+    <title>MRSPTU - Youth Festival 2025</title>
 
     <link rel="stylesheet" href="css/core.css">
     <link rel="stylesheet" href="css/header.css">
@@ -14,6 +14,7 @@
     <style>
         header {
             background-color: rgba(78, 0, 38);
+            position: relative;
         }
 
         #bottom-line {
@@ -29,7 +30,6 @@
             height: 55px;
             transform: rotate(180deg);
             position: absolute;
-
         }
 
         .title-image.left {
@@ -46,12 +46,57 @@
         .participant-selector {
             font-size: 20px;
         }
+
+        /* Stylish Button Base */
+        .btn-nav {
+            position: absolute;
+            top: 10px;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, #ff4800, #ff7300);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 72, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .btn-nav:hover {
+            background: linear-gradient(135deg, #ff7300, #ff4800);
+            box-shadow: 0 0 20px rgba(255, 72, 0, 0.9);
+            transform: scale(1.05);
+        }
+
+        .btn-nav:active {
+            transform: scale(0.98);
+            box-shadow: 0 0 10px rgba(255, 72, 0, 0.7);
+        }
+
+        /* Existing Home Button */
+        .home-btn {
+            left: 15px;
+        }
+
+        /* New Back to Event Button */
+        .back-events-btn {
+            right: 15px;
+        }
     </style>
 
 </head>
 
 <body class="noselect">
     <header>
+
+        <!-- Home Button -->
+        <button class="btn-nav home-btn" onclick="window.location.href='index.html'">← Home</button>
+
+        <!-- ✅ UPDATED BUTTON: Back to Events (correct link to index.html) -->
+        <button class="btn-nav back-events-btn" onclick="window.location.href='index.html?open=events'">← Back to Events</button>
+
+
         <div class="mrsptu-title">
             <img class="title-image left" src="images/title-design.png" alt="">
             Maharaja Ranjit Singh Punjab Technical University
@@ -60,29 +105,27 @@
     </header>
 
     <div class="inter-zonal-title section-header">
-        8th Inter Zonal Youth Festival
+        10th Inter Zonal Youth Festival
     </div>
 
     <div class="yft-title section-header">
-        Meri Mitti Mera Desh
+        "VIRSA Te VIKAS"
         <img id="bottom-line" src="images/line.png" width="660" height="70" alt="">
     </div>
 
     <div class="yft-date section-header">
-        <p>08<sup style="text-transform: lowercase;">th</sup> & 09<sup style="text-transform: lowercase;">th</sup>
-            NOVEMBER 2023</p>
+        <p>19<sup style="text-transform: lowercase;">th</sup> & 20<sup style="text-transform: lowercase;">th</sup>
+            NOVEMBER 2025</p>
     </div>
-
 
     <div class="section-header event-team-name">
         <div class="event-name"></div>
         <div class="team-name"></div>
-        <div class="participant-selector" >
-            <input id="radPc1" type="radio" name="pc" id="" style="width: 16px; height: 16px" checked>Participant-1</input>
-            <input id="radPc2" type="radio" name="pc" id="" style="margin-left: 32px;width: 16px; height: 16px">Participant-2</input>
+        <div class="participant-selector">
+            <input id="radPc1" type="radio" name="pc" style="width: 16px; height: 16px" checked>Participant-1
+            <input id="radPc2" type="radio" name="pc" style="margin-left: 32px;width: 16px; height: 16px">Participant-2
         </div>
     </div>
-
 
     <div class="timer-cont">
         <div class="three-time-cont">
